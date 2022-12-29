@@ -23,11 +23,11 @@ class Direction(Enum):
 Point = namedtuple('Point', 'x, y')
 
 # game colors 
-WHITE = (255, 255, 255)
-RED = (200, 0, 0)
-BLUE1 = (0, 0, 255)
-BLUE2 = (0, 100, 255)
-BACKGROUND_COLOR = (0, 0, 0)
+TEXT_COLOR = (0, 0, 0)
+FOOD_COLOR = (171, 138, 143)
+SNAKE_COLOR_MAIN = (204, 108, 67)
+SNAKE_COLOR_ACCENT = (176, 93, 58)
+BACKGROUND_COLOR = (255, 255, 255)
 
 # game speed 
 SPEED = 20
@@ -131,10 +131,10 @@ class Snake:
         '''
         self.display.fill(BACKGROUND_COLOR)
         for segment in self.snake:
-            pygame.draw.rect(self.display, BLUE1, pygame.Rect(segment.x, segment.y, SQUARE_SIZE, SQUARE_SIZE))
-            pygame.draw.rect(self.display, BLUE2, pygame.Rect(segment.x + 4, segment.y + 4, 12, 12))
-        pygame.draw.rect(self.display, RED, pygame.Rect(self.food.x, self.food.y, SQUARE_SIZE, SQUARE_SIZE))
-        text = font.render(f'Score: {self.score}', True, WHITE)
+            pygame.draw.rect(self.display, SNAKE_COLOR_MAIN, pygame.Rect(segment.x, segment.y, SQUARE_SIZE, SQUARE_SIZE))
+            pygame.draw.rect(self.display, SNAKE_COLOR_ACCENT, pygame.Rect(segment.x + 4, segment.y + 4, 12, 12))
+        pygame.draw.rect(self.display, FOOD_COLOR, pygame.Rect(self.food.x, self.food.y, SQUARE_SIZE, SQUARE_SIZE))
+        text = font.render(f'Score: {self.score}', True, TEXT_COLOR)
         self.display.blit(text, [0, 0])
         pygame.display.flip()
     
