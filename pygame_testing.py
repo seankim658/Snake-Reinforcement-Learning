@@ -12,14 +12,14 @@ from collections import namedtuple
 pygame.init() 
 font = pygame.font.Font(None, 25)
 
-# simple enumeration to denote current snake direction 
+# enumeration to denote current snake direction 
 class Direction(Enum):
     RIGHT = 1
     LEFT = 2
     UP = 3
-    DOWN = 4
+    DOWN = 4 
 
-# virtualize game board as a 2D plane 
+# virtualize game board as a 2D grid of points
 Point = namedtuple('Point', 'x, y')
 
 # game colors 
@@ -36,7 +36,7 @@ SQUARE_SIZE = 20
 
 class Snake:
 
-    def __init__(self, width = 640, height = 480):
+    def __init__(self, width = 1280, height = 720):
         ''' Constructor. 
 
         Parameters
@@ -46,13 +46,13 @@ class Snake:
         height : int
             Height of the game window.
         '''
-        # dimensions of the game window (default to 640x480)
+        # dimensions of the game window (default to 1280x720)
         self.width = width
         self.height = height
         self.display = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption('Snake')
         self.clock = pygame.time.Clock()
-        # initial direction for snake is going up 
+        # initial direction for snake is going right 
         self.direction = Direction.RIGHT 
         # create the head of the snake 
         self.head = Point(self.width / 2, self.height / 2)
@@ -60,7 +60,9 @@ class Snake:
         self.snake = [self.head, Point(self.head.x - SQUARE_SIZE, self.head.y), Point(self.head.x  - (2 * SQUARE_SIZE), self.head.y)]
         # hold the current game score 
         self.score = 0
+        # hold the food piece 
         self.food = None 
+        # place initial food
         self._generate_food()
     
     def _generate_food(self):
@@ -75,7 +77,12 @@ class Snake:
     def step(self):
         ''' Define a game step by 1) collecting user input 2) responding to the input 
             3) checking if the game is over 4) continuing to the next step if the game is not over  
-            and 5) updating the game 
+            and 5) updating the game.
+
+            Returns 
+            -------
+            game_result : boolean 
+            score : int
         '''
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -113,6 +120,10 @@ class Snake:
     
     def _is_collision(self):
         ''' Check if snake has hit itself or if it has hit a boundary wall. 
+
+        Returns
+        -------
+        boolean 
         '''
         if self.head.x > self.width - SQUARE_SIZE:
             return True   
@@ -127,7 +138,7 @@ class Snake:
         return False 
     
     def _update(self):
-        ''' Update the game UI. 
+        ''' Update the game graphics. 
         '''
         self.display.fill(BACKGROUND_COLOR)
         for segment in self.snake:
