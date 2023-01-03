@@ -46,6 +46,7 @@ class AISnake:
             Height of the game window.
         '''
         # dimensions of the game window (default to 1280x720)
+        self.square_size = SQUARE_SIZE
         self.width = width 
         self.height = height 
         self.display = pygame.display.set_mode((self.width, self.height))
@@ -134,7 +135,7 @@ class AISnake:
 
         return reward, game_result, self.score
     
-    def _is_collision(self, point = None):
+    def is_collision(self, point = None):
         ''' Check if snake has hit itself or if it has hit a boundary wall.
 
         Parameters
