@@ -88,19 +88,19 @@ class AISnake:
             3) checking if the game is over 4) continuing to the next step if the game is not over 
             and 5) updating the game.
 
-            Parameters
-            ----------
-            input : List 
-                The model's predicted best input. 
-                [1, 0, 0] = keep going straight (no change in direction)
-                [0, 1, 0] = turn right 
-                [0, 0, 1] = turn left 
+        Parameters
+        ----------
+        input : List 
+            The model's predicted best input. 
+            [1, 0, 0] = keep going straight (no change in direction)
+            [0, 1, 0] = turn right 
+            [0, 0, 1] = turn left 
 
-            Returns 
-            -------
-            game_result : boolean 
-            score : int
-            reward : int
+        Returns 
+        -------
+        game_result : boolean 
+        score : int
+        reward : int
         '''
         self.frame_iteration += 1
         # 1) collect user input (if any)

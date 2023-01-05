@@ -8,6 +8,17 @@ import os
 class QNet(nn.Module):
 
     def __init__(self, input_size, hidden_size, output_size):
+        ''' Constructor. 
+
+        Parameters 
+        ----------
+        input_size : int 
+            Input size for the first layer. 
+        hidden_size : int 
+            Hidden layer input size. 
+        output_size : int 
+            Output size for last layer. 
+        '''
         super().__init__()
         self.linear1 = nn.Linear(input_size, hidden_size)
         self.linear2 = nn.Linear(hidden_size, output_size)
@@ -27,6 +38,17 @@ class QNet(nn.Module):
 class QTrainer:
 
     def __init__(self, model, lr, gamma):
+        ''' Constructor. 
+
+        Parameters
+        ----------
+        model : QNet 
+        lr : float 
+            Learning rate for optimizer. 
+        gamma : float 
+            Discount factor for Q learning. Balances 
+            long term vs short term rewards. 
+        '''
         self.lr = lr 
         self.gamma = gamma 
         self.model = model 
@@ -34,6 +56,16 @@ class QTrainer:
         self.criterion = nn.MSELoss() 
     
     def train_step(self, state, input, reward, next_state, game_result):
+        ''' Create the Q table during training. 
+
+        Parameters 
+        ----------
+        state : np.array
+        input : list
+        reward : int 
+        next_state : np.array 
+        game_result : boolean  
+        '''
         state = torch.tensor(state, dtype = torch.float)
         next_state = torch.tensor(next_state, dtype = torch.float)
         input = torch.tensor(input, dtype = torch.long)

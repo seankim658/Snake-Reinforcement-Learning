@@ -27,6 +27,10 @@ class GameAgent:
     def get_state(self, game):
         ''' Capture the game state. 
 
+        Parameters
+        ----------
+        game : AISnake  
+
         Returns
         -------
         np.array 
@@ -84,6 +88,14 @@ class GameAgent:
     def remember(self, state, input, reward, next_state, game_result):
         ''' Add the game state to memory. Since the deque was initialized with a max length, 
             if the max length has been reached, an element is removed from the left side (popleft).
+
+        Parameters 
+        ----------
+        state : np.array 
+        input : list 
+        reward : int 
+        next_state : np.array
+        game_result : boolean 
         '''
         self.memory.append((state, input, reward, next_state, game_result)) 
 
@@ -99,11 +111,24 @@ class GameAgent:
 
     def train_short_memory(self, state, input, reward, next_state, game_result):
         ''' Train the model's short term memory for one game step. 
+
+        Parameters
+        ----------
+        state : np.array
+        input : list
+        reward : int
+        next_state : np.array 
+        game_result : boolean 
         '''
         self.trainer.train_step(state, input, reward, next_state, game_result)
 
     def get_action(self, state):
-        '''
+        ''' Get the next input. At the beginning, the bot should do more random exploration 
+        to experience the environment. As more games are played, less exploration should be done. 
+
+        Parameters
+        ----------
+        state : np.array
         '''
         self.epsilon = EPSILON_THRESHOLD - self.n_games # the more games played, the less exploration should be done
         next_move = [0, 0, 0]
@@ -119,7 +144,7 @@ class GameAgent:
         return next_move 
 
 def train():
-    '''
+    ''' Function to initiate training. 
     '''
     plot_scores = []
     plot_mean_scores = []
