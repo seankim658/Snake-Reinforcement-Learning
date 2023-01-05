@@ -48,3 +48,20 @@ class QTrainer:
         
         # predicted Q values for current state 
         pred = self.model(state)
+
+        # bellman equation 
+        target = pred.clone()
+        for idx in range(len(game_result)):
+            q_new = reward[idx]
+            if game_result[idx]:
+                q_new = reward[idx] + self.gamma * torch.max(self.model(next_state[idx]))
+            target[idx][torch.argmax(input).item()] = q_new 
+
+        # empty gradients 
+        self.optimizer.zero_grad()
+
+        # calculate loss 
+        loss = self.criterion(target, pred)
+        loss.backward() 
+
+        self.optimizer.step()
