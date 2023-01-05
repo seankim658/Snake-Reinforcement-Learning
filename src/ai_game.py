@@ -116,7 +116,7 @@ class AISnake:
         # 3) check if game is over (or if stuck in a long cycle where nothing has happened)
         reward = 0
         game_result = True
-        if self._is_collision() or self.frame_iteration > 100 * len(self.snake):
+        if self.is_collision() or self.frame_iteration > 100 * len(self.snake):
             game_result = False 
             reward = -10
             return reward, game_result, self.score 

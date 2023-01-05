@@ -5,6 +5,7 @@ import numpy as np
 from collections import deque
 from ai_game import AISnake, Direction, Point 
 from model import QNet, QTrainer
+from plot import plot
 
 MAX_MEMORY = 100_000
 BATCH_SIZE = 1000 
@@ -124,8 +125,8 @@ def train():
     plot_mean_scores = []
     total_score = 0
     record = 0
-    agent = GameAgent
-    game = AISnake
+    agent = GameAgent()
+    game = AISnake()
     while True:
         # get current state 
         curr_state = agent.get_state(game)
@@ -159,7 +160,11 @@ def train():
             # print outcomes 
             print(f'Game: {agent.n_games}, Score: {score}, Record: {record}')
 
-            # TODO: plot 
+            # plot 
+            plot_scores.append(score)
+            total_score += score
+            plot_mean_scores = total_score / agent.n_games 
+            plot(plot_scores, plot_mean_scores) 
 
 if __name__ == '__main__':
     train()
