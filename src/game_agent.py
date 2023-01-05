@@ -155,7 +155,7 @@ def train():
             # check is the last game set a new high schore 
             if score > record:
                 record = score 
-                agent.model.saveI()
+                agent.model.save()
             
             # print outcomes 
             print(f'Game: {agent.n_games}, Score: {score}, Record: {record}')
